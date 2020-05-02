@@ -1,7 +1,13 @@
 {
-    "scientits": {
+    "scientists": {
         "file_type": "csv",
         "raw_path": "scientists.csv",
         "kwargs": {}
+    },
+    "localizations": {
+        "file_type": "csv",
+        "raw_path": "localizations.csv",
+        "kwargs": {}
     }
+
 }
