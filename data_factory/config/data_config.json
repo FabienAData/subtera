@@ -1,0 +1,7 @@
+{
+    "scientits": {
+        "file_type": "csv",
+        "raw_path": "scientists.csv",
+        "kwargs": {}
+    }
+}
