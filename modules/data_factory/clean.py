@@ -86,13 +86,13 @@ def clean_df_column_names(columns: Index) -> List[str]:
     cleaned_columns = [colname.lower() for colname in cleaned_columns]
     return cleaned_columns
 
-def convert_to_datetime(date_serie: pd.Series, format: str = '%d/%M/%Y') -> pd.Series:
+def convert_to_datetime(date_serie: pd.Series, format: str = '%d/%m/%Y') -> pd.Series:
     return pd.to_datetime(date_serie, format=format, errors='ignore')
 
-def years_to_decade(year: Union[int, float]) -> Union[int, float]:
-    decade = year
+def group_years(year: Union[int, float], n_years: int) -> Union[int, float]:
+    grouped_year = year
     if not math.isnan(year):
-        tens = divmod(year, 10)[0]
-        decade = tens * 10
-    return decade
+        n_grouped_years = divmod(year, n_years)[0]
+        grouped_year = n_grouped_years * n_years
+    return grouped_year
         
