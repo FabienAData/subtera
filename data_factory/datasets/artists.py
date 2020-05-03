@@ -1,7 +1,7 @@
 from typing import Optional
 from data_factory.datasets.dataset import Dataset
 from modules.config.configuration import Configuration
-from modules.data_factory.clean import convert_to_datetime
+from modules.data_factory.clean import convert_to_datetime, years_to_decade
 
 
 class Artists(Dataset):
@@ -28,6 +28,9 @@ class Artists(Dataset):
             self._clean_column_names()
             self.data['birth_date'] = convert_to_datetime(self.data['birth_date'])
             self.data['death_date'] = convert_to_datetime(self.data['death_date'])
+            self.data['birth_year'] = self.data['birth_date'].dt.year
+            self.data['birth_decade'] = self.data['birth_year'].apply(years_to_decade)
+            
         else:
             raise Exception("Initial state is not raw")
         self._state = 'clean'
@@ -38,7 +41,6 @@ def main():
     dataset = Artists('raw', config)
     dataset.clean()
     dataset.save('clean', overwrite=True)
-
 
 if __name__ == '__main__':
     main()
