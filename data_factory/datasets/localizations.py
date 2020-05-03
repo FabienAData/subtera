@@ -29,7 +29,7 @@ class Localizations(Dataset):
         Clean DataFrame if _state == "raw" and change _state to "clean".
         """
         if self._state == 'raw':
-            self.data.columns = self._clean_column_names()
+            self._clean_column_names()
         else:
             raise Exception("Initial state is not raw")
         self._state = 'clean'
