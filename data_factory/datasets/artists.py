@@ -4,7 +4,7 @@ from modules.config.configuration import Configuration
 from modules.data_factory.clean import convert_to_datetime
 
 
-class Scientists(Dataset):
+class Artists(Dataset):
 
     def __init__(self, state: Optional[str], config: Configuration) -> None:
         """
@@ -17,7 +17,7 @@ class Scientists(Dataset):
         config : Configuration
             Configuration used to get the paths.
         """
-        super().__init__("scientists", state, config)
+        super().__init__("artists", state, config)
         self.place_col = "birth_place"
 
     def clean(self) -> None:
@@ -35,7 +35,7 @@ class Scientists(Dataset):
 
 def main():
     config = Configuration()
-    dataset = Scientists('raw', config)
+    dataset = Artists('raw', config)
     dataset.clean()
     dataset.save('clean', overwrite=True)
 
