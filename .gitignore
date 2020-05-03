@@ -1,0 +1,14 @@
+.vscode/*
+
+log/*
+!log/.gitkeep
+
+**/__pycache__/*
+
+notebooks/*
+
+data/raw/*
+!data/raw/.gitkeep
+
+data/processed/*
+!data/processed/.gitkeep
