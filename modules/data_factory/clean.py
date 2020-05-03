@@ -1,3 +1,4 @@
+import pandas as pd
 import re
 import unicodedata
 from typing import List
@@ -84,3 +85,6 @@ def clean_df_column_names(columns: Index) -> List[str]:
     cleaned_columns = [re.sub(r'_+', '_', colname) for colname in cleaned_columns]
     cleaned_columns = [colname.lower() for colname in cleaned_columns]
     return cleaned_columns
+
+def convert_to_datetime(date_serie: pd.Series, format: str = '%d/%M/%y'):
+    return pd.to_datetime(date_serie,format=format, errors='ignore')
