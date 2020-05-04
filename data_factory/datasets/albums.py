@@ -1,14 +1,15 @@
 from typing import Optional
 from data_factory.datasets.dataset import Dataset
+from data_factory.datasets.artists import Artists
 from modules.config.configuration import Configuration
 from modules.data_factory.clean import convert_to_datetime, group_years
 
 
-class Artists(Dataset):
+class Albums(Dataset):
 
     def __init__(self, state: Optional[str], config: Configuration) -> None:
         """
-        Initialize the Artists class.
+        Initialize the Albums class.
 
         Parameters
         ----------
@@ -17,8 +18,7 @@ class Artists(Dataset):
         config : Configuration
             Configuration used to get the paths.
         """
-        super().__init__("artists", state, config)
-        self.place_col = "birth_place"
+        super().__init__("albums", state, config)
 
     def clean(self) -> None:
         """
@@ -26,6 +26,7 @@ class Artists(Dataset):
         """
         if self._state == 'raw':
             self._clean_column_names()
+            self.data xxx
             self.data['birth_date'] = convert_to_datetime(self.data['birth_date'])
             self.data['death_date'] = convert_to_datetime(self.data['death_date'])
             self.data['birth_year'] = self.data['birth_date'].dt.year
@@ -40,7 +41,8 @@ class Artists(Dataset):
 
 def main():
     config = Configuration()
-    dataset = Artists('raw', config)
+    dataset = Albums('raw', config)
+    dataset = Albums('clean', config)
     dataset.clean()
     dataset.save('clean', overwrite=True)
 

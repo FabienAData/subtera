@@ -41,7 +41,7 @@ class MapVizualizer():
 
                 iframe = branca.element.IFrame(html=html, width=500, height=300)
                 popup = folium.Popup(iframe, max_width=2650)
-                
+
                 coord = [values['lat'], values['lng']]
                 marker = folium.Marker(coord, popup=popup, tooltip=tooltip)
                 folium_sub_group.add_child(marker)
