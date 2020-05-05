@@ -7,6 +7,9 @@ log/*
 
 notebooks/*
 
+config/*
+!config/dev.cfg
+
 data/raw/*
 !data/raw/.gitkeep
 
