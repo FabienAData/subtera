@@ -12,3 +12,9 @@ data/raw/*
 
 data/processed/*
 !data/processed/.gitkeep
+
+images/raw/*
+!images/raw/.gitkeep
+
+images/processed/*
+!images/processed/.gitkeep
