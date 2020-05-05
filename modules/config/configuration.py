@@ -34,6 +34,8 @@ class Configuration(object):
         self.logger = self._get_logger(config)
         self.raw_data_path = self._get_raw_data_path(config)
         self.processed_data_path = self._get_processed_data_path(config)
+        self.raw_images_path = self._get_raw_images_path(config)
+        self.processed_images_path = self._get_processed_images_path(config)
 
     def _get_config_parser(self, application_root: str) -> configparser.ConfigParser:
         """
@@ -116,6 +118,29 @@ class Configuration(object):
             )
         return processed_data_path
 
+    def _get_raw_images_path(self, config: configparser.ConfigParser) -> str:
+        """
+        TODO: docstring
+        :param config:
+        :return:
+        """
+        raw_images_path = config["IMAGES"]["RAW_IMAGES_PATH"]
+        if not os.path.exists(raw_images_path):
+            raise Exception(
+                f"Raw images path : {raw_images_path} folder doesn't exist."
+            )
 
-if __name__ == "__main__":
-    pass
+        return raw_images_path
+
+    def _get_processed_images_path(self, config: configparser.ConfigParser) -> str:
+        """
+        TODO: docstring
+        :param config:
+        :return:
+        """
+        processed_images_path = config["IMAGES"]["PROCESSED_IMAGES_PATH"]
+        if not os.path.exists(processed_images_path):
+            raise Exception(
+                f"Processed images path : {processed_images_path} folder doesn't exist."
+            )
+        return processed_images_path
