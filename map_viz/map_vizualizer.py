@@ -1,17 +1,20 @@
 """"""
+import os
 import folium
 from folium import LayerControl
 from folium.plugins import MarkerCluster, FeatureGroupSubGroup
 
 import branca
 
+from modules.config.configuration import Configuration
 from data_factory.gold_data_builder import GoldDataBuilder
+from image_factory.image_handler import ImageHandler
 
 class MapVizualizer():
     """"""
-    def __init__(self, gold_data_builder: GoldDataBuilder):
+    def __init__(self, gold_data_builder: GoldDataBuilder, config: Configuration):
         self.gold_data_builder = gold_data_builder
-        
+        self._config = config
         self.folium_map = None
     
     def create_map(self, grouping_feature: str):
@@ -34,10 +37,20 @@ class MapVizualizer():
             sub_data = data[data[grouping_feature] == grouping_value]
             for _,values in sub_data.iterrows():
                 name = values['name']
+                id = values['artist_id']
                 living_dates = ' - '.join([str(values["birth_date"]), str(values["death_date"])]) 
                 place = values['birth_place']
                 bio = values['biography']
-                html = f'<b>{name}</b> ({living_dates})<br>Lieu : {place}<br><br>{bio}'
+                html = f'<b>{name}</b> ({living_dates})<br>Lieu : {place}'
+                png_file = "".join([id, '.png'])
+                resized_images_folder = os.path.join(
+                    self._config.processed_images_path, 'resized'
+                )
+                if png_file in os.listdir(resized_images_folder):
+                    img_handler = ImageHandler(png_file, 'resized', self._config)
+                    decoded_image = img_handler.get_decoded_base64_png()
+                    image_html = f'<img src="data:image/png;base64,{decoded_image}">'
+                    html = "<br><br>".join([html, image_html])
 
                 iframe = branca.element.IFrame(html=html, width=500, height=300)
                 popup = folium.Popup(iframe, max_width=2650)
@@ -50,4 +63,4 @@ class MapVizualizer():
         self.map = m
 
     def save_map(self, path: str):
-        self.map.save(path) 
+        self.map.save(path)

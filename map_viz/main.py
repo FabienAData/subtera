@@ -21,7 +21,7 @@ def main():
     gold_data_builder.add_locations()
     gold_data_builder.located_data = gold_data_builder.located_data.drop_duplicates()
 
-    map_viz = MapVizualizer(gold_data_builder)
+    map_viz = MapVizualizer(gold_data_builder, config)
     map_viz.create_map(grouping_feature='birth_half_decade')
     map_viz.save_map('/home/agnusfabien/Bureau/map.html')
 
