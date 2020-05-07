@@ -21,3 +21,6 @@ images/raw/*
 
 images/processed/*
 !images/processed/.gitkeep
+
+audios/*
+!audios/.gitkeep
