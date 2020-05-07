@@ -152,7 +152,7 @@ class Configuration(object):
         :param config:
         :return:
         """
-        audios_path = config["AUDIOS"]
+        audios_path = config['AUDIOS']['AUDIOS_PATH']
         if not os.path.exists(audios_path):
             raise Exception(
                 f"Audios path : {audios_path} folder doesn't exist."

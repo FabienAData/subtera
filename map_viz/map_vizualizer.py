@@ -11,6 +11,7 @@ import re
 from modules.config.configuration import Configuration
 from data_factory.gold_data_builder import GoldDataBuilder
 from image_factory.image_handler import ImageHandler
+from audio_factory.audio_handler import AudioHandler
 
 class MapVizualizer():
     """"""
@@ -43,22 +44,27 @@ class MapVizualizer():
                 living_dates = ' - '.join([str(values["birth_date"]), str(values["death_date"])]) 
                 place = values['birth_place']
                 bio = values['biography']
+
+                img_html_tag = ''
                 resized_images_folder = os.path.join(
                     self._config.processed_images_path, 'resized'
                 )
-                img_html_tag = ''
                 for img_file in os.listdir(resized_images_folder):
                     if id in img_file:
                         img_handler = ImageHandler(img_file, 'resized', self._config)
                         decoded_image = img_handler.get_decoded_base64_png()
                         img_extension = re.sub(rf'{id}\.', '', img_file)
                         img_html_tag = f'<img src="data:image/{img_extension};base64,{decoded_image}">'
+                
+                audio_html_tag = ''
+                audios_folder_path = self._config.audios_path
+                for audio_file in os.listdir(audios_folder_path):
+                    if id in audio_file:
+                        audio_handler = AudioHandler(audio_file, self._config)
+                        decoded_audio = audio_handler.get_decoded_base64_str()
+                        audio_extension = re.sub(rf'{id}\.', '', audio_file)
+                        audio_html_tag = f'<audio controls><source src="data:audio/{audio_extension};base64,{decoded_audio}"></audio>'
 
-
-                audio_path = "/home/agnusfabien/Bureau/Personnel/Projets/projekto/eminem_64.mp3"
-
-                encoded_audio = base64.b64encode(open(audio_path, 'rb').read())
-                decoded_audio = encoded_audio.decode('UTF-8')
                 html = f"""
                 <html>
                 <body>
@@ -66,8 +72,7 @@ class MapVizualizer():
                 <br><br>
                 {img_html_tag}
                 <br><br>
-                <audio controls>
-                <source src="data:audio/mp3;base64, {decoded_audio}"></audio>
+                {audio_html_tag}
 
                 </body>
                 </html>
