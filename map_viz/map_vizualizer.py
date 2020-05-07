@@ -50,25 +50,41 @@ class MapVizualizer():
                     self._config.processed_images_path, 'resized'
                 )
                 for img_file in os.listdir(resized_images_folder):
-                    if id in img_file:
-                        img_handler = ImageHandler(img_file, 'resized', self._config)
+                    img_name = re.sub(r'\..*$', '', img_file)
+                    if img_name == id:
+                        img_extension = re.sub(rf'{img_name}\.', '', img_file)
+                        img_handler = ImageHandler(img_name, img_extension, 'resized', self._config)
                         decoded_image = img_handler.get_decoded_base64_png()
-                        img_extension = re.sub(rf'{id}\.', '', img_file)
                         img_html_tag = f'<img src="data:image/{img_extension};base64,{decoded_image}">'
                 
                 audio_html_tag = ''
                 audios_folder_path = self._config.audios_path
                 for audio_file in os.listdir(audios_folder_path):
                     if id in audio_file:
-                        audio_handler = AudioHandler(audio_file, self._config)
-                        decoded_audio = audio_handler.get_decoded_base64_str()
                         audio_extension = re.sub(rf'{id}\.', '', audio_file)
+                        audio_handler = AudioHandler(id, audio_extension, self._config)
+                        decoded_audio = audio_handler.get_decoded_base64_str()
                         audio_html_tag = f'<audio controls><source src="data:audio/{audio_extension};base64,{decoded_audio}"></audio>'
-
+                html_head = """
+                <head>
+                <style>
+                pop_up_title {
+                    font-family: 'proxima_nova_rgbold', Helvetica, Arial, sans-serif;
+                    display: block;
+                    font-size: 1.3em;
+                    margin-top: 0.67em;
+                    margin-bottom: 0.67em;
+                    margin-left: 0;
+                    margin-right: 0;
+                    }
+                </style>
+                </head>
+                """
                 html = f"""
                 <html>
+                {html_head}
                 <body>
-                <b>{name}</b>({living_dates})<br>Lieu : {place}
+                <pop_up_title>{name}</pop_up_title>({living_dates})<br>Lieu : {place}
                 <br><br>
                 {img_html_tag}
                 <br><br>
@@ -77,8 +93,8 @@ class MapVizualizer():
                 </body>
                 </html>
                 """
-                iframe = branca.element.IFrame(html=html, width=500, height=300)
-                popup = folium.Popup(iframe, max_width=2650)
+                iframe = branca.element.IFrame(html=html, width=500, height=400)
+                popup = folium.Popup(iframe)
 
                 coord = [values['lat'], values['lng']]
                 marker = folium.Marker(coord, popup=popup, tooltip=tooltip)
