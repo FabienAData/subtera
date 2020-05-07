@@ -10,15 +10,16 @@ from modules.config.configuration import Configuration
 class AudioHandler(object):
     """
     """
-    def __init__(self, audio_file: str, config: Configuration):
-        self._audio_name = audio_file
+    def __init__(self, audio_name: str, audio_extension: str, config: Configuration):
+        self.audio_name = audio_name
+        self.audio_extension = audio_extension
         self._config = config
         self.audio_path = self._get_audio_path()
-        self.audio = None
     
     def _get_audio_path(self) -> str:
+        audio_file = '.'.join([self.audio_name, self.audio_extension])
         audio_path = os.path.join(
-            self._config.audios_path, self._audio_name
+            self._config.audios_path, audio_file
         )
         return audio_path
 
