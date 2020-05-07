@@ -36,6 +36,7 @@ class Configuration(object):
         self.processed_data_path = self._get_processed_data_path(config)
         self.raw_images_path = self._get_raw_images_path(config)
         self.processed_images_path = self._get_processed_images_path(config)
+        self.audios_path = self._get_audios_path(config)
 
     def _get_config_parser(self, application_root: str) -> configparser.ConfigParser:
         """
@@ -144,3 +145,16 @@ class Configuration(object):
                 f"Processed images path : {processed_images_path} folder doesn't exist."
             )
         return processed_images_path
+
+    def _get_audios_path(self, config: configparser.ConfigParser) -> str:
+        """
+        TODO: docstring
+        :param config:
+        :return:
+        """
+        audios_path = config["AUDIOS"]
+        if not os.path.exists(audios_path):
+            raise Exception(
+                f"Audios path : {audios_path} folder doesn't exist."
+            )
+        return audios_path
