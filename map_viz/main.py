@@ -1,10 +1,10 @@
 import pandas as pd
 import folium
 
-from data_factory.datasets.localizations import Localizations
-from data_factory.datasets.artists import Artists
-from data_factory.datasets.scientists import Scientists
-from data_factory.gold_data_builder import GoldDataBuilder
+from input_factories.data_factory.datasets.localizations import Localizations
+from input_factories.data_factory.datasets.artists import Artists
+from input_factories.data_factory.datasets.scientists import Scientists
+from input_factories.data_factory.gold_data_builder import GoldDataBuilder
 from modules.config.configuration import Configuration
 from map_viz.map_vizualizer import MapVizualizer
 
