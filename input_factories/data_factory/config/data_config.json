@@ -1,0 +1,23 @@
+{
+    "artists": {
+        "file_type": "csv",
+        "raw_path": "artists.csv",
+        "kwargs": {
+            "encoding": "utf-8"
+        }
+    },
+    "scientists": {
+        "file_type": "csv",
+        "raw_path": "scientists.csv",
+        "kwargs": {
+            "encoding": "utf-8"
+        }
+    },
+    "localizations": {
+        "file_type": "csv",
+        "raw_path": "localizations.csv",
+        "kwargs": {},
+        "api_key": "AIzaSyDwxYX_gBaT0v_Qlz6GfCPvcjrgejRvLIs"
+    }
+
+}
