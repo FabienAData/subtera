@@ -8,8 +8,9 @@ node_label_template_head = \
   """<head>
 <style>
 artist_name {
+background-color: white;
 font-family: 'proxima_nova_rgbold', Helvetica, Arial, sans-serif;
-font-size: 1.8em;
+font-size: 1.2em;
 }
 </style>
 </head>"""
