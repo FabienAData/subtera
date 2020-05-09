@@ -42,18 +42,18 @@ class NetworkVizualizer(object):
             font_color=self.font_color)
         net_viz.barnes_hut()
         for _,values in self.data.iterrows():
-            source = values[self.source_col]
-            target = values[self.target_col]
+            source = str(self.nodes_titles_dict.get(values[self.source_col]))
+            target = str(self.nodes_titles_dict.get(values[self.target_col]))
             weight = 4
             net_viz.add_node(
                 source,
                 label=source,
-                title=get_node_label_template(str(source))
+                title=get_node_label_template(source)
             )
             net_viz.add_node(
                 target,
                 label=target,
-                title=get_node_label_template(str(target))
+                title=get_node_label_template(target)
             )
             net_viz.add_edge(
                 source,
