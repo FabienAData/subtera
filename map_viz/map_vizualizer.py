@@ -9,9 +9,10 @@ import base64
 import re
 
 from modules.config.configuration import Configuration
-from data_factory.gold_data_builder import GoldDataBuilder
-from image_factory.image_handler import ImageHandler
-from audio_factory.audio_handler import AudioHandler
+from input_factories.data_factory.gold_data_builder import GoldDataBuilder
+from input_factories.image_factory.image_handler import ImageHandler
+from input_factories.audio_factory.audio_handler import AudioHandler
+from map_viz.artists_popup_template import get_html_artist_pop_up
 
 class MapVizualizer():
     """"""
@@ -41,8 +42,9 @@ class MapVizualizer():
             for _,values in sub_data.iterrows():
                 name = values['name']
                 id = str(values['artist_id'])
-                living_dates = ' - '.join([str(values["birth_date"]), str(values["death_date"])]) 
+                date = values["birth_date"].strftime('%m/%d/%Y')
                 place = values['birth_place']
+                birth_date_and_place = ' '.join([date, place])
                 bio = values['biography']
 
                 img_html_tag = ''
@@ -58,42 +60,23 @@ class MapVizualizer():
                         img_html_tag = f'<img src="data:image/{img_extension};base64,{decoded_image}">'
                 
                 audio_html_tag = ''
-                audios_folder_path = self._config.audios_path
+                audios_folder_path = os.path.join(self._config.processed_audios_path, 'artists')
                 for audio_file in os.listdir(audios_folder_path):
                     if id in audio_file:
                         audio_extension = re.sub(rf'{id}\.', '', audio_file)
-                        audio_handler = AudioHandler(id, audio_extension, self._config)
+                        audio_handler = AudioHandler(id, audio_extension, 'artists', 'processed', self._config)
                         decoded_audio = audio_handler.get_decoded_base64_str()
                         audio_html_tag = f'<audio controls><source src="data:audio/{audio_extension};base64,{decoded_audio}"></audio>'
-                html_head = """
-                <head>
-                <style>
-                pop_up_title {
-                    font-family: 'proxima_nova_rgbold', Helvetica, Arial, sans-serif;
-                    display: block;
-                    font-size: 1.3em;
-                    margin-top: 0.67em;
-                    margin-bottom: 0.67em;
-                    margin-left: 0;
-                    margin-right: 0;
-                    }
-                </style>
-                </head>
-                """
-                html = f"""
-                <html>
-                {html_head}
-                <body>
-                <pop_up_title>{name}</pop_up_title>({living_dates})<br>Lieu : {place}
-                <br><br>
-                {img_html_tag}
-                <br><br>
-                {audio_html_tag}
+                html = get_html_artist_pop_up(
+                    img_html_tag,
+                    name,
+                    birth_date_and_place,
+                    audio_html_tag
+                    )
+                if id == 'eminem':
+                    print(html)
 
-                </body>
-                </html>
-                """
-                iframe = branca.element.IFrame(html=html, width=500, height=400)
+                iframe = branca.element.IFrame(html=html, width=600, height=400)
                 popup = folium.Popup(iframe)
 
                 coord = [values['lat'], values['lng']]
