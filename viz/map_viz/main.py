@@ -6,7 +6,7 @@ from input_factories.data_factory.datasets.artists import Artists
 from input_factories.data_factory.datasets.scientists import Scientists
 from input_factories.data_factory.gold_data_builder import GoldDataBuilder
 from modules.config.configuration import Configuration
-from map_viz.map_vizualizer import MapVizualizer
+from viz.map_viz.map_vizualizer import MapVizualizer
 
 
 def main():

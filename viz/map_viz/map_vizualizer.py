@@ -12,7 +12,7 @@ from modules.config.configuration import Configuration
 from input_factories.data_factory.gold_data_builder import GoldDataBuilder
 from input_factories.image_factory.image_handler import ImageHandler
 from input_factories.audio_factory.audio_handler import AudioHandler
-from map_viz.artists_popup_template import get_html_artist_pop_up
+from viz.map_viz.artists_popup_template import get_html_artist_pop_up
 
 class MapVizualizer():
     """"""
@@ -73,8 +73,6 @@ class MapVizualizer():
                     birth_date_and_place,
                     audio_html_tag
                     )
-                if id == 'eminem':
-                    print(html)
 
                 iframe = branca.element.IFrame(html=html, width=600, height=400)
                 popup = folium.Popup(iframe)
