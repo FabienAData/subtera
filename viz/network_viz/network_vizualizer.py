@@ -5,7 +5,7 @@ from pyvis.network import Network
 import networkx as nx
 
 from modules.config.configuration import Configuration
-from viz.network_viz.popup_templates import get_node_label_template
+from viz.network_viz.popup_templates import get_edge_label_template, get_node_label_template
 
 
 class NetworkVizualizer(object):
@@ -15,6 +15,7 @@ class NetworkVizualizer(object):
         source_col: str,
         target_col: str,
         edge_title_col: str,
+        edge_sub_title_col: str,
         nodes_titles_dict: Dict,
         nodes_categories_dict: Dict,
         categories_color_dict: Dict,
@@ -28,6 +29,7 @@ class NetworkVizualizer(object):
         self.source_col = source_col
         self.target_col = target_col
         self.edge_title_col = edge_title_col
+        self.edge_sub_title_col = edge_sub_title_col
         self.nodes_titles_dict = nodes_titles_dict
         self.nodes_categories_dict = nodes_categories_dict
         self.categories_color_dict = categories_color_dict
@@ -52,6 +54,7 @@ class NetworkVizualizer(object):
             target_node_color = self._get_node_color(values[self.target_col])
             edge_color = get_edge_color(source_node_color, target_node_color)
             edge_title = values[self.edge_title_col]
+            edge_sub_title = values[self.edge_sub_title_col]
             weight = 4
             net_viz.add_node(
                 source,
@@ -68,7 +71,7 @@ class NetworkVizualizer(object):
             net_viz.add_edge(
                 source,
                 target,
-                title=edge_title,
+                title=get_edge_label_template(edge_title, edge_sub_title),
                 value=weight,
                 color=edge_color
             )

@@ -27,6 +27,7 @@ def main():
         'artist_start',
         'artist_end',
         'value',
+        'info',
         nodes_titles_dict,
         nodes_categories_dict,
         categories_color_dict,
