@@ -1,6 +1,7 @@
 from typing import Any, Dict
 
 import pandas as pd
+import pyvis
 from pyvis.network import Network
 import networkx as nx
 
@@ -75,6 +76,7 @@ class NetworkVizualizer(object):
                 value=weight,
                 color=edge_color
             )
+        add_node_values(net_viz)
         self.net_viz = net_viz
     
     def _get_node_color(self, node_value: Any) -> str:
@@ -95,3 +97,8 @@ def get_edge_color(source_node_color: str, target_node_color: str):
     if source_node_color == target_node_color:
         edge_color = source_node_color
     return edge_color
+
+def add_node_values(net_viz: pyvis.network.Network) -> None:
+    neighbor_map = net_viz.get_adj_list()
+    for node in net_viz.nodes:
+        node["value"] = len(neighbor_map[node["id"]])
