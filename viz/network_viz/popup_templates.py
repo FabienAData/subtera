@@ -4,7 +4,7 @@ They will be displayed as popups of a network vizualization.
 """
 
 
-node_label_template_head = \
+node_popup_template_head = \
   """<head>
 <style>
 node_label {
@@ -16,13 +16,13 @@ font-size: 1.2em;
 </head>"""
 
 
-def get_node_label_template(
+def get_node_popup_template(
     node_label: str,
-    node_label_template_head: str = node_label_template_head
+    node_popup_template_head: str = node_popup_template_head
 ) -> str:
-    node_label_template = f"""
+    node_popup_template = f"""
 <html>
-{node_label_template_head}
+{node_popup_template_head}
 <body>
 
 <node_label>{node_label}</node_label>
@@ -30,10 +30,10 @@ def get_node_label_template(
 </body>
 </html>
 """
-    return node_label_template
+    return node_popup_template
 
 
-edge_label_template_head = \
+edge_popup_template_head = \
   """<head>
 <style>
 edge_title {
@@ -50,14 +50,14 @@ font-size: 0.8em;
 </head>"""
 
 
-def get_edge_label_template(
+def get_edge_popup_template(
     edge_title: str,
     edge_sub_title: str,
-    edge_label_template_head: str = edge_label_template_head
+    edge_popup_template_head: str = edge_popup_template_head
 ) -> str:
-    edge_label_template = f"""
+    edge_popup_template = f"""
 <html>
-{edge_label_template_head}
+{edge_popup_template_head}
 <body>
 
 <edge_title>{edge_title}</edge_title>
@@ -67,4 +67,4 @@ def get_edge_label_template(
 </body>
 </html>
 """
-    return edge_label_template
+    return edge_popup_template
