@@ -13,6 +13,13 @@
             "encoding": "utf-8"
         }
     },
+    "collaboration_songs": {
+        "file_type": "csv",
+        "raw_path": "collaboration_songs.csv",
+        "kwargs": {
+            "encoding": "utf-8"
+        }
+    },
     "localizations": {
         "file_type": "csv",
         "raw_path": "localizations.csv",

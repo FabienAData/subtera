@@ -18,7 +18,8 @@ test:
 data_integration:
 	python input_factories/data_factory/datasets/scientists.py
 	python input_factories/data_factory/datasets/artists.py
-	python input_factories/data_factory/datasets/localizations.py
+	python input_factories/data_factory/datasets/collaboration_songs.py
+	# python input_factories/data_factory/datasets/localizations.py
 
 map:
 	python viz/map_viz/main.py
