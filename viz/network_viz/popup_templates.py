@@ -53,6 +53,7 @@ font-size: 0.8em;
 def get_edge_popup_template(
     edge_title: str,
     edge_sub_title: str,
+    edge_audio_html_tag: str,
     edge_popup_template_head: str = edge_popup_template_head
 ) -> str:
     edge_popup_template = f"""
@@ -63,6 +64,8 @@ def get_edge_popup_template(
 <edge_title>{edge_title}</edge_title>
 <br>
 <edge_sub_title>{edge_sub_title}</edge_sub_title>
+<br>
+{edge_audio_html_tag}
 
 </body>
 </html>

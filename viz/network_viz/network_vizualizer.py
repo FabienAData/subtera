@@ -1,10 +1,12 @@
-from typing import Any, Dict
+import os
+from typing import Any, Dict, Optional
 
 import pandas as pd
 import pyvis
 from pyvis.network import Network
 import networkx as nx
 
+from input_factories.audio_factory.audio_handler import AudioHandler
 from modules.config.configuration import Configuration
 from viz.network_viz.popup_templates import get_edge_popup_template, get_node_popup_template
 
@@ -21,6 +23,7 @@ class NetworkVizualizer(object):
         nodes_categories_dict: Dict,
         categories_color_dict: Dict,
         config: Configuration,
+        edge_audio_category: Optional[str] = None,
         height: str = '750px',
         width: str = '100%',
         bg_color: str = '#222222',
@@ -35,6 +38,7 @@ class NetworkVizualizer(object):
         self.nodes_categories_dict = nodes_categories_dict
         self.categories_color_dict = categories_color_dict
         self._config = config
+        self.edge_audio_category = edge_audio_category
         self.height = height
         self.width = width
         self.bg_color = bg_color
@@ -69,10 +73,14 @@ class NetworkVizualizer(object):
                 title=get_node_popup_template(target),
                 color=target_node_color
             )
+            edge_audio_html_tag = self._get_edge_audio_html_tag(
+                edge_title, edge_sub_title
+            )
+
             net_viz.add_edge(
                 source,
                 target,
-                title=get_edge_popup_template(edge_title, edge_sub_title),
+                title=get_edge_popup_template(edge_title, edge_sub_title, edge_audio_html_tag),
                 value=weight,
                 color=edge_color
             )
@@ -87,6 +95,18 @@ class NetworkVizualizer(object):
             if color_candidate is not None:
                 node_color = color_candidate
         return node_color
+
+    def _get_edge_audio_html_tag(self, edge_title: Any, edge_sub_title: Any) -> str:
+        audio_html_tag = ''
+        if self.edge_audio_category is not None:
+            audios_folder_path = os.path.join(self._config.processed_audios_path, self.edge_audio_category)
+            for audio_file in os.listdir(audios_folder_path):
+                if audio_file == '.'.join([edge_title, 'mp3']):
+                    print(edge_title)
+                    audio_handler = AudioHandler(edge_title, 'mp3', self.edge_audio_category, 'processed', self._config)
+                    decoded_audio = audio_handler.get_decoded_base64_str()
+                    audio_html_tag = f'<audio controls autoplay><source src="data:audio/mp3;base64,{decoded_audio}"></audio>'
+        return audio_html_tag
 
     def show(self):
         self.net_viz.show("/home/agnusfabien/Bureau/network.html")

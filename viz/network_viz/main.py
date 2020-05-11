@@ -31,7 +31,8 @@ def main():
         nodes_titles_dict,
         nodes_categories_dict,
         categories_color_dict,
-        config
+        config,
+        edge_audio_category='network_feat_songs'
     )
     net_vizualzier.create_net_viz()
     net_vizualzier.show()
