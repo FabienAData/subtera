@@ -41,7 +41,7 @@ class Artists(Dataset):
         """
         """
         self.data = self.data[['artist_id', 'youtube_url']]
-        self._state = 'clean'
+        self.data = self.data[self.data['youtube_url'].notnull()]
 
 
 def main():
