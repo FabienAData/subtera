@@ -20,7 +20,7 @@ def main():
         'Variété Française + 20’s – 70’s': '#E2E34D', # dark yellow
         'Variété Française +80’s – 2010’s' : '#EA842D' # orange
     }
-    data = pd.read_csv("/home/agnusfabien/Bureau/Personnel/Projets/projekto/data/raw/network_feat_songs.csv")
+    data = pd.read_csv("/home/agnusfabien/Bureau/Personnel/Projets/ligoj/data/raw/collaboration_songs.csv")
 
     net_vizualzier = NetworkVizualizer(
         data,
@@ -32,7 +32,7 @@ def main():
         nodes_categories_dict,
         categories_color_dict,
         config,
-        edge_audio_category='network_feat_songs'
+        edge_audio_category='collaboration_songs'
     )
     net_vizualzier.create_net_viz()
     net_vizualzier.show()

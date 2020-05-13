@@ -59,18 +59,6 @@ class AudioWavDownloader(object):
         return url
 
 
-def download_all_artists_songs(config: Configuration) -> None:
-    artists_data = Artists('youtube_urls', config).data
-    for artist_id in artists_data['artist_id'].sort_values():
-        print(artist_id)
-        if artist_id + '.wav' in os.listdir(
-            os.path.join(config.raw_audios_path, 'artists')
-        ):
-            pass
-        else:
-            audio_wav_downloader = AudioWavDownloader(audio_name=artist_id, audio_category='artists', audio_name_col='artist_id', config=config)
-            audio_wav_downloader.download_wav()
-
 def download_all_collaboration_songs(config: Configuration) -> None:
     collab_songs_data = CollaborationSongs('youtube_urls', config).data
     for song in collab_songs_data['song_name'].sort_values():
@@ -86,7 +74,5 @@ def download_all_collaboration_songs(config: Configuration) -> None:
 
 if __name__ == '__main__':
     config = Configuration()
-    if sys.argv[1] == 'artists_songs':
-        download_all_artists_songs(config)
-    elif sys.argv[1] == 'collaboration_songs':
+    if sys.argv[1] == 'collaboration_songs':
         download_all_collaboration_songs(config)

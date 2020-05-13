@@ -3,7 +3,6 @@ from typing import Optional
 
 from input_factories.data_factory.datasets.dataset import Dataset
 from input_factories.data_factory.datasets.artists import Artists
-from input_factories.data_factory.datasets.scientists import Scientists
 from modules.config.configuration import Configuration
 
 from modules.data_factory.geodata import get_geolocalized_df
@@ -55,8 +54,6 @@ def main():
     dataset = Localizations('raw', config)
     dataset.clean()
     dataset.save('clean', overwrite=True)
-    scientists = Scientists('clean', config)
-    dataset.add_new_places(scientists)
     artists = Artists('clean', config)
     dataset.add_new_places(artists)
     dataset.save('clean', overwrite=True)

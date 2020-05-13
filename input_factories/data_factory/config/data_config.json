@@ -6,13 +6,6 @@
             "encoding": "utf-8"
         }
     },
-    "scientists": {
-        "file_type": "csv",
-        "raw_path": "scientists.csv",
-        "kwargs": {
-            "encoding": "utf-8"
-        }
-    },
     "collaboration_songs": {
         "file_type": "csv",
         "raw_path": "collaboration_songs.csv",
