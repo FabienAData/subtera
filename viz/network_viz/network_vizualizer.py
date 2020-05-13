@@ -7,6 +7,7 @@ from pyvis.network import Network
 import networkx as nx
 
 from input_factories.audio_factory.audio_handler import AudioHandler
+from input_factories.image_factory.image_handler import ImageHandler
 from modules.config.configuration import Configuration
 from viz.network_viz.popup_templates import get_edge_popup_template, get_node_popup_template
 
@@ -54,7 +55,17 @@ class NetworkVizualizer(object):
         net_viz.barnes_hut()
         for _,values in self.data.iterrows():
             source = str(self.nodes_titles_dict.get(values[self.source_col]))
+            source_image_path = ImageHandler(
+                values[self.source_col],
+                'png',
+                'resized',
+                self._config).image_path
             target = str(self.nodes_titles_dict.get(values[self.target_col]))
+            target_image_path = ImageHandler(
+                values[self.target_col],
+                'png',
+                'resized',
+                self._config).image_path
             source_node_color = self._get_node_color(values[self.source_col])
             target_node_color = self._get_node_color(values[self.target_col])
             edge_color = get_edge_color(source_node_color, target_node_color)
@@ -65,13 +76,17 @@ class NetworkVizualizer(object):
                 source,
                 label=source,
                 title=get_node_popup_template(source),
-                color=source_node_color
+                color=source_node_color,
+                shape='image',
+                image=source_image_path
             )
             net_viz.add_node(
                 target,
                 label=target,
                 title=get_node_popup_template(target),
-                color=target_node_color
+                color=target_node_color,
+                shape='image',
+                image=target_image_path
             )
             edge_audio_html_tag = self._get_edge_audio_html_tag(
                 edge_title, edge_sub_title
@@ -102,7 +117,6 @@ class NetworkVizualizer(object):
             audios_folder_path = os.path.join(self._config.processed_audios_path, self.edge_audio_category)
             for audio_file in os.listdir(audios_folder_path):
                 if audio_file == '.'.join([edge_title, 'mp3']):
-                    print(edge_title)
                     audio_handler = AudioHandler(edge_title, 'mp3', self.edge_audio_category, 'processed', self._config)
                     decoded_audio = audio_handler.get_decoded_base64_str()
                     audio_html_tag = f'<audio controls autoplay><source src="data:audio/mp3;base64,{decoded_audio}"></audio>'

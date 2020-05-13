@@ -57,3 +57,4 @@ class ImageHandler(object):
         encoded = base64.b64encode(open(self.image_path, 'rb').read())
         decoded = encoded.decode('UTF-8')
         return decoded
+
