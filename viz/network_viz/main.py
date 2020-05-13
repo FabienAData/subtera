@@ -7,6 +7,7 @@ from typing import Dict
 from viz.network_viz.network_vizualizer import NetworkVizualizer
 from modules.config.configuration import Configuration
 from input_factories.data_factory.datasets.artists import Artists
+from input_factories.data_factory.datasets.collaboration_songs import CollaborationSongs
 
 
 def main():
@@ -20,13 +21,13 @@ def main():
         'Variété Française + 20’s – 70’s': '#E2E34D', # dark yellow
         'Variété Française +80’s – 2010’s' : '#EA842D' # orange
     }
-    data = pd.read_csv("/home/agnusfabien/Bureau/Personnel/Projets/ligoj/data/raw/collaboration_songs.csv")
+    songs_data = CollaborationSongs('clean', config).data
 
     net_vizualzier = NetworkVizualizer(
-        data,
+        songs_data,
         'artist_start',
         'artist_end',
-        'value',
+        'song_name',
         'info',
         nodes_titles_dict,
         nodes_categories_dict,
@@ -39,8 +40,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
