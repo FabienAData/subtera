@@ -6,7 +6,7 @@ import base64
 import os
 from typing import Optional, Tuple
 
-from PIL import Image
+from PIL import Image, ImageOps, ImageDraw
 
 from modules.config.configuration import Configuration
 
@@ -51,6 +51,20 @@ class ImageHandler(object):
         self.image.thumbnail(size, Image.ANTIALIAS)
         self.image = self.image.convert('L')
         self._state = 'resized'
+        self.image_path = self._get_image_path()
+
+    def circle(self, size: Tuple[int, int] = (200, 200)):
+        self.image.thumbnail(size, Image.ANTIALIAS)
+        self.image = self.image.convert('L')
+
+        mask = Image.new('L', size, 0)
+        draw = ImageDraw.Draw(mask)
+        draw.ellipse((0, 0) + size, fill=255)
+        output = ImageOps.fit(self.image, mask.size, centering=(0.5, 0.5))
+        output.putalpha(mask)
+        self.image = output
+
+        self._state = 'circled'
         self.image_path = self._get_image_path()
 
     def get_decoded_base64_png(self) -> None:

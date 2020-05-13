@@ -18,7 +18,7 @@ def main():
                 config
                 )
             img_handler.load()
-            img_handler.resize()
+            img_handler.circle()
             img_handler.save()
 
 

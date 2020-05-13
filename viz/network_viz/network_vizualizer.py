@@ -58,13 +58,13 @@ class NetworkVizualizer(object):
             source_image_path = ImageHandler(
                 values[self.source_col],
                 'png',
-                'resized',
+                'circled',
                 self._config).image_path
             target = str(self.nodes_titles_dict.get(values[self.target_col]))
             target_image_path = ImageHandler(
                 values[self.target_col],
                 'png',
-                'resized',
+                'circled',
                 self._config).image_path
             source_node_color = self._get_node_color(values[self.source_col])
             target_node_color = self._get_node_color(values[self.target_col])
